@@ -1,0 +1,58 @@
+name: Build and Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/build-and-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    env:
+      AWS_REGION: us-west-1  # Change to your region
+      S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+
+      - name: Upload to S3
+        working-directory: ./frontend
+        run: |
+          aws s3 sync build/client s3://${{ env.S3_BUCKET }}/ --delete
+          echo "✅ Deployment successful! Files uploaded to s3://${{ env.S3_BUCKET }}/"
+
+    #   - name: Invalidate CloudFront (optional)
+    #     if: secrets.CLOUDFRONT_DISTRIBUTION_ID != ''
+    #     run: |
+    #       aws cloudfront create-invalidation \
+    #         --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+    #         --paths "/*"
