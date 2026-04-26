@@ -77,4 +77,19 @@ describe('Dashboard', () => {
     renderDashboard()
     expect(screen.getByText(/recent activity/i)).toBeTruthy()
   })
+
+  it('displays water intake card', () => {
+    renderDashboard()
+    expect(screen.getAllByText(/water intake/i).length).toBeGreaterThan(0)
+  })
+
+  it('displays todays goals section', () => {
+    renderDashboard()
+    expect(screen.getAllByText(/today's goals/i).length).toBeGreaterThan(0)
+  })
+
+  it('displays current weight card', () => {
+    renderDashboard()
+    expect(screen.getAllByText(/current weight/i).length).toBeGreaterThan(0)
+  })
 })
