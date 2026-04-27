@@ -11,20 +11,25 @@ This document outlines the testing strategy for the AdaptFitness application —
 
 ## 3. Testing Methodologies
 
-## 3.1 Unit Testing
+### 3.1 Unit Testing
 Tool: Vitest + React Testing Library  
 Why: Unit tests isolate components and verify they render correctly and respond to user input as expected.  
 Applied to: All components (LandingPage, LoginPage, SignupPage, Dashboard, NutritionLog, FitnessLog, CalorieCalculator)
 
-## 3.2 Component Integration Testing
+### 3.2 Component Integration Testing
 Tool:Vitest + React Testing Library  
 Why: Some components depend on context providers (AuthContext) and routing. Integration tests verify these work correctly together, not just in isolation.  
 Applied to: Auth flows (login/signup), protected route behavior, context-dependent components
 
-## 3.3 Automated CI Testing
+### 3.3 Automated CI Testing
 Tool: GitHub Actions  
 Why: Running tests automatically on every pull request ensures no broken code merges to main. This removes human error from the process and gives the team immediate feedback.  
 Applied to: All test files run on every PR via the quality-checks job in our CI/CD pipeline
+
+### 3.4 Black box Testing
+Tool: Web browser + OWASP top 10:2025
+Why: Ensure the end user's experience is not broken, unpleasant, or easily exploitable
+Applied to: Anything a user can see, click, or type in
 
 ## 4. Out of Scope
 - End-to-end browser testing 
@@ -33,7 +38,7 @@ Applied to: All test files run on every PR via the quality-checks job in our CI/
 
 ## 5. Test Environment
 | Item | Details |
-
+|------|---------|
 | Framework | React 19 + React Router 7 |
 | Language | TypeScript |
 | Test Runner | Vitest 4.0 |
@@ -50,7 +55,7 @@ Tests are executed in two ways:
 
 ## 7. Test Coverage Goals
 | Feature | Target Coverage |
-
+|---------|-----------------|
 | Authentication (Login/Signup) | 100% |
 | Landing Page | 100% |
 | Dashboard | Core rendering |
@@ -60,10 +65,11 @@ Tests are executed in two ways:
 
 ## 8. Timeline & Resources
 | Phase | Description | Target |
-
+|-------|-------------|--------|
 | Phase 1 | Auth + Landing page tests | Sprint 2 Week 1 |
 | Phase 2 | Core feature tests (Dashboard, Calculator, Logs) | Sprint 2 Week 2 |
-| Phase 3 | CI integration + test results tracking | Sprint 2 Week 3 |
+| Phase 3 | CI integration + test results tracking | Sprint 2 Week 3 
+
 
 ## 9. Bug Tracking
 Bugs discovered during testing are tracked as GitHub Issues with the bug label. Each issue includes:
