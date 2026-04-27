@@ -19,7 +19,7 @@ export default function AuthCallback() {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-slate-50">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-emerald-50 via-white to-slate-50">
       <div className="text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-emerald-600 mx-auto mb-6"></div>
         <h2 className="text-2xl font-bold text-slate-900 mb-2">Completing sign in...</h2>
