@@ -12,7 +12,7 @@ export default function CalorieCalculator() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  
+
   const [formData, setFormData] = useState({
     age: '',
     height: '',
@@ -245,7 +245,7 @@ export default function CalorieCalculator() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-slate-50 to-white flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
           <p className="mt-4 text-slate-600">Loading your calculation...</p>
@@ -255,7 +255,7 @@ export default function CalorieCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-white">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -312,22 +312,20 @@ export default function CalorieCalculator() {
                       <button
                         type="button"
                         onClick={() => handleInputChange('sex', 'male')}
-                        className={`p-3 border-2 rounded-lg transition-all ${
-                          formData.sex === 'male'
+                        className={`p-3 border-2 rounded-lg transition-all ${formData.sex === 'male'
                             ? 'border-emerald-600 bg-emerald-50'
                             : 'border-slate-200 hover:border-slate-300'
-                        }`}
+                          }`}
                       >
                         Male
                       </button>
                       <button
                         type="button"
                         onClick={() => handleInputChange('sex', 'female')}
-                        className={`p-3 border-2 rounded-lg transition-all ${
-                          formData.sex === 'female'
+                        className={`p-3 border-2 rounded-lg transition-all ${formData.sex === 'female'
                             ? 'border-emerald-600 bg-emerald-50'
                             : 'border-slate-200 hover:border-slate-300'
-                        }`}
+                          }`}
                       >
                         Female
                       </button>
@@ -365,17 +363,20 @@ export default function CalorieCalculator() {
                     />
                   </div>
 
-                {/* Goal Weight */}
-                <div className="space-y-2">
+                  {/* Goal Weight */}
+                  <div className="space-y-2">
                     <Label htmlFor="goal-weight">Goal Weight (kg)</Label>
                     <Input
-                        id="goal-weight"
-                        type="number"
-                        placeholder="e.g., 70"
-                        value={formData.goalWeight}
-                        onChange={(e) => setFormData({ ...formData, goalWeight: e.target.value })}
+                      id="goal-weight"
+                      type="number"
+                      placeholder="e.g., 70"
+                      value={formData.goalWeight}
+                      onChange={(e) => setFormData({ ...formData, goalWeight: e.target.value })}
+                      min="30"
+                      max="300"
+                      step="0.1"
                     />
-                </div>
+                  </div>
 
                   {/* Activity Level */}
                   <div className="space-y-2">
@@ -391,11 +392,10 @@ export default function CalorieCalculator() {
                           key={activity.value}
                           type="button"
                           onClick={() => handleInputChange('activityLevel', activity.value)}
-                          className={`w-full p-3 border-2 rounded-lg text-left transition-all ${
-                            formData.activityLevel === activity.value
+                          className={`w-full p-3 border-2 rounded-lg text-left transition-all ${formData.activityLevel === activity.value
                               ? 'border-emerald-600 bg-emerald-50'
                               : 'border-slate-200 hover:border-slate-300'
-                          }`}
+                            }`}
                         >
                           <div className="font-medium">{activity.label}</div>
                           <div className="text-sm text-slate-600">{activity.desc}</div>
@@ -417,11 +417,10 @@ export default function CalorieCalculator() {
                           key={goal.value}
                           type="button"
                           onClick={() => handleInputChange('goal', goal.value)}
-                          className={`w-full p-3 border-2 rounded-lg flex items-center gap-3 transition-all ${
-                            formData.goal === goal.value
+                          className={`w-full p-3 border-2 rounded-lg flex items-center gap-3 transition-all ${formData.goal === goal.value
                               ? 'border-emerald-600 bg-emerald-50'
                               : 'border-slate-200 hover:border-slate-300'
-                          }`}
+                            }`}
                         >
                           <goal.icon className="size-5" />
                           <span className="font-medium">{goal.label}</span>
@@ -474,66 +473,56 @@ export default function CalorieCalculator() {
                     </div>
 
                     {/* Weight Loss */}
-                    <div className={`p-4 rounded-lg border-2 ${
-                      formData.goal === 'lose' 
-                        ? 'bg-emerald-50 border-emerald-600' 
+                    <div className={`p-4 rounded-lg border-2 ${formData.goal === 'lose'
+                        ? 'bg-emerald-50 border-emerald-600'
                         : 'bg-orange-50 border-orange-200'
-                    }`}>
+                      }`}>
                       <div className="flex items-center gap-2 mb-1">
-                        <TrendingDown className={`size-4 ${
-                          formData.goal === 'lose' ? 'text-emerald-600' : 'text-orange-600'
-                        }`} />
-                        <div className={`text-sm font-medium ${
-                          formData.goal === 'lose' ? 'text-emerald-900' : 'text-orange-900'
-                        }`}>
+                        <TrendingDown className={`size-4 ${formData.goal === 'lose' ? 'text-emerald-600' : 'text-orange-600'
+                          }`} />
+                        <div className={`text-sm font-medium ${formData.goal === 'lose' ? 'text-emerald-900' : 'text-orange-900'
+                          }`}>
                           Lose Weight
                           {formData.goal === 'lose' && ' (Recommended)'}
                         </div>
                       </div>
-                      <div className={`text-3xl font-bold ${
-                        formData.goal === 'lose' ? 'text-emerald-900' : 'text-orange-900'
-                      }`}>
+                      <div className={`text-3xl font-bold ${formData.goal === 'lose' ? 'text-emerald-900' : 'text-orange-900'
+                        }`}>
                         {results.weightLoss}
                       </div>
-                      <div className={`text-sm ${
-                        formData.goal === 'lose' ? 'text-emerald-700' : 'text-orange-700'
-                      }`}>
+                      <div className={`text-sm ${formData.goal === 'lose' ? 'text-emerald-700' : 'text-orange-700'
+                        }`}>
                         calories/day (~0.5kg/week loss)
                       </div>
                     </div>
 
                     {/* Weight Gain */}
-                    <div className={`p-4 rounded-lg border-2 ${
-                      formData.goal === 'gain' 
-                        ? 'bg-emerald-50 border-emerald-600' 
+                    <div className={`p-4 rounded-lg border-2 ${formData.goal === 'gain'
+                        ? 'bg-emerald-50 border-emerald-600'
                         : 'bg-purple-50 border-purple-200'
-                    }`}>
+                      }`}>
                       <div className="flex items-center gap-2 mb-1">
-                        <TrendingUp className={`size-4 ${
-                          formData.goal === 'gain' ? 'text-emerald-600' : 'text-purple-600'
-                        }`} />
-                        <div className={`text-sm font-medium ${
-                          formData.goal === 'gain' ? 'text-emerald-900' : 'text-purple-900'
-                        }`}>
+                        <TrendingUp className={`size-4 ${formData.goal === 'gain' ? 'text-emerald-600' : 'text-purple-600'
+                          }`} />
+                        <div className={`text-sm font-medium ${formData.goal === 'gain' ? 'text-emerald-900' : 'text-purple-900'
+                          }`}>
                           Gain Weight
                           {formData.goal === 'gain' && ' (Recommended)'}
                         </div>
                       </div>
-                      <div className={`text-3xl font-bold ${
-                        formData.goal === 'gain' ? 'text-emerald-900' : 'text-purple-900'
-                      }`}>
+                      <div className={`text-3xl font-bold ${formData.goal === 'gain' ? 'text-emerald-900' : 'text-purple-900'
+                        }`}>
                         {results.weightGain}
                       </div>
-                      <div className={`text-sm ${
-                        formData.goal === 'gain' ? 'text-emerald-700' : 'text-purple-700'
-                      }`}>
+                      <div className={`text-sm ${formData.goal === 'gain' ? 'text-emerald-700' : 'text-purple-700'
+                        }`}>
                         calories/day (controlled gain)
                       </div>
                     </div>
 
                     <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
                       <p className="text-sm text-amber-900">
-                        <strong>Note:</strong> These are estimates based on general formulas. 
+                        <strong>Note:</strong> These are estimates based on general formulas.
                         Consult with a healthcare professional for personalized advice.
                       </p>
                     </div>
